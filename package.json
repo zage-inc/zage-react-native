@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "lint": "eslint 'src/*.tsx' && npm run prettier",
-    "build": "npm run lint && rm -rf *.tsbuildinfo && tsc ",
+    "build": "npm run lint && rm -rf *.tsbuildinfo",
     "prettier": "prettier './**/*.tsx' --write"
   },
   "author": "Zage",
