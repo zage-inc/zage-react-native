@@ -75,24 +75,24 @@ export default function App() {
 
   return (
       <View style={styles.container}>
-				{/* Button that opens Zage payment flow */}
+		{/* Button that opens Zage payment flow */}
         <Button title='Pay with Zage' onPress={() => setShowZage(true)}/>
-				{/* Zage component with necessary props */}        
-				<Zage
+		{/* Zage component with necessary props */}        
+		<Zage
           publicKey='<PUBLIC_KEY>'
           paymentToken='<PAYMENT_TOKEN'
           onComplete={(res: any) => 
-						// Callback for when user completes payment flow
-						console.log(`i completed a payment: ${res}`
-					)}
+			// Callback for when user completes payment flow
+			console.log(`I completed a payment: ${res}`
+		  )}
           onExit={() => 
-						// Callback for when user exits payment flow
-						console.log(`i exited a payment`)
-					)} 
-					// Insert showZage state 
+			// Callback for when user exits payment flow
+			console.log(`I exited a payment`)
+		  )} 
+			// Insert showZage state 
           showZage={showZage}
-	        // Insert showZage state setter 
-					setShowZage={setShowZage}
+          // Insert showZage state setter 
+	      setShowZage={setShowZage}
         />
       </View>
   );
