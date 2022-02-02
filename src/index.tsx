@@ -11,7 +11,7 @@ export interface ZageProps {
   paymentToken: string;
   onComplete: (res: any) => void;
   onExit: () => void;
-  showZage?: boolean;
+  showZage: boolean;
   setShowZage: (b: boolean) => void;
   className?: string;
 }
@@ -43,7 +43,7 @@ export const Zage: React.FC<ZageProps> = props => {
         `;
         setJsResponse(appendedJs);
       };
-      req.open("GET", "http://localhost:3000/v0-rn.js", true);
+      req.open("GET", "https://api.zage.dev/v0/v0-rn.js", true);
       req.send(null);
     } catch (error) {
       console.error(error);
