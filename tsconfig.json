@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",                          
+    "module": "commonjs",                                
+    "rootDir": "./src",                                  
+    "allowJs": false,                                     
+
+    "esModuleInterop": true,                             
+    "forceConsistentCasingInFileNames": true,            
+    "jsx": "react-native",
+    "skipLibCheck": true,
+
+    "strict": true,   
+    "strictNullChecks": true, 
+  },
+  "include": ["src"]
+}

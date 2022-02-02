@@ -1,0 +1,32 @@
+{
+  "name": "@zage/zage-react-native",
+  "version": "0.1.0",
+  "description": "Zage React-Native SDK",
+  "main": "./src/index.tsx",
+  "keywords": [
+    "Zage",
+    "zage-react-native"
+  ],
+  "scripts": {
+    "lint": "eslint 'src/*.tsx' && npm run prettier",
+    "build": "npm run lint && rm -rf *.tsbuildinfo && tsc ",
+    "prettier": "prettier './**/*.tsx' --write"
+  },
+  "author": "Zage",
+  "license": "MIT",
+  "dependencies": {
+    "react": "17.0.1",
+    "react-native": "0.64.3",
+    "react-native-webview": "11.13.0"
+  },
+  "devDependencies": {
+    "@types/react": "~17.0.21",
+    "@types/react-native": "~0.64.12",
+    "@typescript-eslint/eslint-plugin": "^5.10.2",
+    "@typescript-eslint/parser": "^5.10.2",
+    "eslint": "^8.8.0",
+    "eslint-plugin-react": "^7.28.0",
+    "metro-react-native-babel-preset": "^0.67.0",
+    "prettier": "^1.19.1"
+  }
+}
