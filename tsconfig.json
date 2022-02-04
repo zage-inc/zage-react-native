@@ -1,17 +1,36 @@
 {
   "compilerOptions": {
-    "target": "ESNext",                          
-    "module": "commonjs",                                
-    "rootDir": "./src",                                  
-    "allowJs": false,                                     
-
-    "esModuleInterop": true,                             
-    "forceConsistentCasingInFileNames": true,            
-    "jsx": "react-native",
+    "target": "ESNext",
+    "module": "commonjs",
+    "lib": [
+      "ES7",
+      "dom"
+    ],
+    "declaration": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "removeComments": true,
+    "incremental": true,
+    "isolatedModules": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "allowJs": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
     "skipLibCheck": true,
-
-    "strict": true,   
-    "strictNullChecks": true, 
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }

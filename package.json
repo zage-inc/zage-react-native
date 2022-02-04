@@ -2,14 +2,14 @@
   "name": "@zage/zage-react-native",
   "version": "0.1.0",
   "description": "Zage React-Native SDK",
-  "main": "./src/index.tsx",
+  "main": "./dist/index.js",
   "keywords": [
     "Zage",
     "zage-react-native"
   ],
   "scripts": {
     "lint": "eslint 'src/*.tsx' && npm run prettier",
-    "build": "npm run lint && rm -rf *.tsbuildinfo",
+    "build": "npm run lint && rm -rf *.tsbuildinfo && tsc",
     "prettier": "prettier './**/*.tsx' --write"
   },
   "author": "Zage",
