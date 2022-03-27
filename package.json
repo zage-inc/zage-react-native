@@ -1,6 +1,6 @@
 {
   "name": "@zage/zage-react-native",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Zage React-Native SDK",
   "main": "./dist/index.js",
   "keywords": [
@@ -15,9 +15,11 @@
   "author": "Zage",
   "license": "MIT",
   "dependencies": {
-    "react": "17.0.1",
-    "react-native": "0.64.3",
-    "react-native-webview": "11.13.0"
+    "react-native-webview": "^11.13.0"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
   },
   "devDependencies": {
     "@types/react": "~17.0.21",

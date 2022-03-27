@@ -9,7 +9,7 @@ const SB_APP_URL = "https://sandbox.zage.dev/checkout";
 export interface ZageProps {
   publicKey: string;
   paymentToken: string;
-  onComplete: (res: any) => void;
+  onComplete: (res: Record<string, unknown>) => void;
   onExit: () => void;
   showZage: boolean;
   setShowZage: (b: boolean) => void;
@@ -17,16 +17,14 @@ export interface ZageProps {
 }
 
 // Zage Component
-export const Zage: React.FC<ZageProps> = props => {
-  const {
-    publicKey,
-    paymentToken,
-    onComplete,
-    onExit,
-    showZage,
-    setShowZage
-  } = props;
-
+export const Zage = ({
+  publicKey,
+  paymentToken,
+  onComplete,
+  onExit,
+  showZage,
+  setShowZage
+}: ZageProps) => {
   const zageApp = publicKey.startsWith("sandbox_") ? SB_APP_URL : PROD_APP_URL;
 
   const [jsResponse, setJsResponse] = useState<string>("");
