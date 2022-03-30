@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Modal } from "react-native";
-import { WebView } from "react-native-webview";
+import React, { useEffect, useState } from 'react';
+import { Modal } from 'react-native';
+import { WebView } from 'react-native-webview';
 
-const PROD_APP_URL = "https://production.zage.dev/checkout";
-const SB_APP_URL = "https://sandbox.zage.dev/checkout";
+const PROD_APP_URL = 'https://production.zage.dev/checkout';
+const SB_APP_URL = 'https://sandbox.zage.dev/checkout';
 
 // Zage component properties
 export interface ZageProps {
@@ -23,25 +23,25 @@ export const Zage = ({
   onComplete,
   onExit,
   showZage,
-  setShowZage
+  setShowZage,
 }: ZageProps) => {
-  const zageApp = publicKey.startsWith("sandbox_") ? SB_APP_URL : PROD_APP_URL;
+  const zageApp = publicKey.startsWith('sandbox_') ? SB_APP_URL : PROD_APP_URL;
 
-  const [jsResponse, setJsResponse] = useState<string>("");
+  const [jsResponse, setJsResponse] = useState<string>('');
 
-  const getJsRes = async () => {
+  const getJsRes = async (zagePaymentToken: string) => {
     try {
       const req = new XMLHttpRequest();
       req.onreadystatechange = () => {
         const appendedJs =
           req.responseText +
           `
-          openPayment('${paymentToken}', '${publicKey}')
+          openPayment('${zagePaymentToken}', '${publicKey}')
           true
         `;
         setJsResponse(appendedJs);
       };
-      req.open("GET", "https://api.zage.dev/v0/v0-rn.js", true);
+      req.open('GET', 'https://api.zage.dev/v0/v0-rn.js', true);
       req.send(null);
     } catch (error) {
       console.error(error);
@@ -49,23 +49,25 @@ export const Zage = ({
   };
 
   useEffect(() => {
-    getJsRes();
-  }, []);
+    if (jsResponse === '' && paymentToken && paymentToken.startsWith('py_')) {
+      getJsRes(paymentToken);
+    }
+  }, [paymentToken, jsResponse]);
 
   return (
     <Modal
       visible={showZage}
       transparent={true}
-      animationType="none"
-      presentationStyle="overFullScreen"
-      style={{ backgroundColor: "transparent" }}
+      animationType='none'
+      presentationStyle='overFullScreen'
+      style={{ backgroundColor: 'transparent' }}
     >
       <WebView
         source={{ uri: zageApp }}
         javaScriptEnabled={true}
         injectedJavaScript={jsResponse}
-        style={{ backgroundColor: "transparent" }}
-        onMessage={event => {
+        style={{ backgroundColor: 'transparent' }}
+        onMessage={(event) => {
           const res = JSON.parse(event.nativeEvent.data);
           if (res.completed) {
             onComplete(res.response);
