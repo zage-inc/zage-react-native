@@ -4,6 +4,7 @@ import { WebView } from 'react-native-webview';
 
 const PROD_APP_URL = 'https://production.zage.dev/checkout';
 const SB_APP_URL = 'https://sandbox.zage.dev/checkout';
+const INFO_MODAL_URL = 'https://production.zage.dev/info'; //This is a place holder for the info modal
 
 // Zage component properties
 export interface ZageProps {
@@ -14,6 +15,12 @@ export interface ZageProps {
   showZage: boolean;
   setShowZage: (b: boolean) => void;
   className?: string;
+}
+
+export interface ZageInfoModalProps {
+  publicKey: string;
+  showModal: boolean;
+  setShowModal: (b: boolean) => void;
 }
 
 // Zage Component
@@ -75,6 +82,52 @@ export const Zage = ({
             onExit();
           }
           setShowZage(false);
+        }}
+      />
+    </Modal>
+  );
+};
+
+export const ZageInfoModal = ({ publicKey, showModal, setShowModal }: ZageInfoModalProps) => {
+  const [jsResponse, setJsResponse] = useState<string>('');
+  const getJsRes = async (publicKey: string) => {
+    try {
+      const req = new XMLHttpRequest();
+      req.onreadystatechange = () => {
+        const appendedJs =
+          req.responseText +
+          `
+          openModal('${publicKey}')
+          true
+        `;
+        setJsResponse(appendedJs);
+      };
+      req.open('GET', 'infoModalPlaceHolder', true); //Change URL to Info Modal URL
+      req.send(null);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    if (jsResponse === '') {
+      getJsRes(publicKey);
+    }
+  }, [publicKey, jsResponse]);
+  return (
+    <Modal
+      visible={showModal}
+      transparent={true}
+      animationType='none'
+      presentationStyle='overFullScreen'
+      style={{ backgroundColor: 'transparent' }}
+    >
+      <WebView
+        source={{ uri: INFO_MODAL_URL }}
+        javaScriptEnabled={true}
+        injectedJavaScript={jsResponse}
+        style={{ backgroundColor: 'transparent' }}
+        onMessage={() => {
+          setShowModal(false);
         }}
       />
     </Modal>
