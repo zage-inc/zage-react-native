@@ -4,7 +4,7 @@ import { WebView } from 'react-native-webview';
 
 const PROD_APP_URL = 'https://production.zage.dev/checkout';
 const SB_APP_URL = 'https://sandbox.zage.dev/checkout';
-const INFO_MODAL_URL = 'https://production.zage.dev/info'; //This is a place holder for the info modal
+const INFO_MODAL_URL = 'https://info.zage.dev/'; //This is a place holder for the info modal
 
 // Zage component properties
 export interface ZageProps {
