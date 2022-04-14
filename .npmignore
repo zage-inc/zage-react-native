@@ -9,3 +9,7 @@ components
 src
 tsconfig.json
 tsconfig.tsbuildinfo
+.babelrc
+.eslintrc.json
+.prettierrc.js
+
