@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal } from 'react-native';
+import { Linking, Modal, Platform } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 const PROD_APP_URL = 'https://production.zage.dev/checkout';
@@ -90,6 +90,7 @@ export const Zage = ({
 
 export const ZageInfoModal = ({ publicKey, showModal, setShowModal }: ZageInfoModalProps) => {
   const [jsResponse, setJsResponse] = useState<string>('');
+  let webview:any;
   const getJsRes = async (publicKey: string) => {
     try {
       const req = new XMLHttpRequest();
@@ -117,17 +118,40 @@ export const ZageInfoModal = ({ publicKey, showModal, setShowModal }: ZageInfoMo
     <Modal
       visible={showModal}
       transparent={true}
-      animationType='none'
-      presentationStyle='overFullScreen'
-      style={{ backgroundColor: 'transparent' }}
+      presentationStyle="overFullScreen"
+      style={{
+        backgroundColor: "transparent",
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+      }}
+      animationType="slide"
     >
       <WebView
+        ref={(ref) => (webview = ref)}
+        useWebKit={true}
+        height={"100%"}
+        width={"100%"}
         source={{ uri: INFO_MODAL_URL }}
         javaScriptEnabled={true}
         injectedJavaScript={jsResponse}
-        style={{ backgroundColor: 'transparent' }}
+        style={{
+          resizeMode: "contain",
+          backgroundColor: "white",
+          marginTop: 50,
+          borderColor: "black",
+          borderWidth: 5,
+          borderRadius: 40,
+        }}
         onMessage={() => {
           setShowModal(false);
+        }}
+        onNavigationStateChange={(_) => {
+          if (_.url !== INFO_MODAL_URL && Platform.OS === "ios") {
+            webview.stopLoading();
+            Linking.openURL(_.url)
+              .then(() => null)
+              .catch(() => null);
+          }
         }}
       />
     </Modal>
