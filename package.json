@@ -10,7 +10,8 @@
   "scripts": {
     "lint": "eslint 'src/*.tsx' && npm run prettier",
     "build": "npm run lint && rm -rf *.tsbuildinfo && tsc",
-    "prettier": "prettier './**/*.tsx' --write"
+    "prettier": "prettier './**/*.tsx' --write",
+    "prepublishOnly": "npm run build"
   },
   "author": "Zage",
   "license": "MIT",

@@ -4,3 +4,12 @@ npm-debug.log
 node_modules
 
 tmp
+
+components
+src
+tsconfig.json
+tsconfig.tsbuildinfo
+.babelrc
+.eslintrc.json
+.prettierrc.js
+

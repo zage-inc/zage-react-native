@@ -89,14 +89,10 @@ export const Zage = ({
   );
 };
 
-export const ZageInfoModal = ({
-  publicKey,
-  showModal,
-  setShowModal,
-}: ZageInfoModalProps) => {
-  const ZageInfoModalURL= publicKey.startsWith('sandbox_') ? SB_INFO_MODAL_URL : INFO_MODAL_URL;
-  const [jsResponse, setJsResponse] = useState<string>("");
-  let webview:any;
+export const ZageInfoModal = ({ publicKey, showModal, setShowModal }: ZageInfoModalProps) => {
+  const ZageInfoModalURL = publicKey.startsWith('sandbox_') ? SB_INFO_MODAL_URL : INFO_MODAL_URL;
+  const [jsResponse, setJsResponse] = useState<string>('');
+  let webview: any;
   const getJsRes = async () => {
     try {
       const req = new XMLHttpRequest();
@@ -109,18 +105,14 @@ export const ZageInfoModal = ({
         `;
         setJsResponse(appendedJs);
       };
-      req.open(
-        "GET",
-        "https://api.zage.dev/v0/v0-rn.js",
-        true
-      ); //Change URL to Info Modal URL
+      req.open('GET', 'https://api.zage.dev/v0/v0-rn.js', true); //Change URL to Info Modal URL
       req.send(null);
     } catch (error) {
       console.error(error);
     }
   };
   useEffect(() => {
-    if (jsResponse === "") {
+    if (jsResponse === '') {
       getJsRes();
     }
   }, [jsResponse]);
@@ -128,27 +120,27 @@ export const ZageInfoModal = ({
     <Modal
       visible={showModal}
       transparent={true}
-      presentationStyle="overFullScreen"
+      presentationStyle='overFullScreen'
       style={{
-        backgroundColor: "transparent",
+        backgroundColor: 'transparent',
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
       }}
-      animationType="slide"
+      animationType='slide'
     >
       <WebView
         ref={(ref) => (webview = ref)}
         useWebKit={true}
-        height={"100%"}
-        width={"100%"}
+        height={'100%'}
+        width={'100%'}
         source={{ uri: ZageInfoModalURL }}
         javaScriptEnabled={true}
         injectedJavaScript={jsResponse}
         style={{
-          resizeMode: "contain",
-          backgroundColor: "white",
+          resizeMode: 'contain',
+          backgroundColor: 'white',
           marginTop: 50,
-          borderColor: "black",
+          borderColor: 'black',
           borderWidth: 5,
           borderRadius: 40,
         }}
@@ -156,7 +148,7 @@ export const ZageInfoModal = ({
           setShowModal(false);
         }}
         onNavigationStateChange={(_) => {
-          if (_.url !== ZageInfoModalURL && Platform.OS === "ios") {
+          if (_.url !== ZageInfoModalURL && Platform.OS === 'ios') {
             webview.stopLoading();
             Linking.openURL(_.url)
               .then(() => null)
