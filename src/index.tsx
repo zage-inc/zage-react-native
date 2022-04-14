@@ -88,10 +88,14 @@ export const Zage = ({
   );
 };
 
-export const ZageInfoModal = ({ publicKey, showModal, setShowModal }: ZageInfoModalProps) => {
-  const [jsResponse, setJsResponse] = useState<string>('');
+export const ZageInfoModal = ({
+  publicKey,
+  showModal,
+  setShowModal,
+}: ZageInfoModalProps) => {
+  const [jsResponse, setJsResponse] = useState<string>("");
   let webview:any;
-  const getJsRes = async (publicKey: string) => {
+  const getJsRes = async () => {
     try {
       const req = new XMLHttpRequest();
       req.onreadystatechange = () => {
@@ -103,17 +107,21 @@ export const ZageInfoModal = ({ publicKey, showModal, setShowModal }: ZageInfoMo
         `;
         setJsResponse(appendedJs);
       };
-      req.open('GET', 'infoModalPlaceHolder', true); //Change URL to Info Modal URL
+      req.open(
+        "GET",
+        "https://qt88c29c0e.execute-api.us-west-1.amazonaws.com/live-test/v0-rn.js",
+        true
+      ); //Change URL to Info Modal URL
       req.send(null);
     } catch (error) {
       console.error(error);
     }
   };
   useEffect(() => {
-    if (jsResponse === '') {
-      getJsRes(publicKey);
+    if (jsResponse === "") {
+      getJsRes();
     }
-  }, [publicKey, jsResponse]);
+  }, [jsResponse]);
   return (
     <Modal
       visible={showModal}
