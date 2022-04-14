@@ -4,7 +4,8 @@ import { WebView } from 'react-native-webview';
 
 const PROD_APP_URL = 'https://production.zage.dev/checkout';
 const SB_APP_URL = 'https://sandbox.zage.dev/checkout';
-const INFO_MODAL_URL = 'https://info.zage.dev/'; //This is a place holder for the info modal
+const INFO_MODAL_URL = 'https://info.zage.dev/';
+const SB_INFO_MODAL_URL = 'https://info.sandbox.zage.dev/';
 
 // Zage component properties
 export interface ZageProps {
@@ -93,6 +94,7 @@ export const ZageInfoModal = ({
   showModal,
   setShowModal,
 }: ZageInfoModalProps) => {
+  const ZageInfoModalURL= publicKey.startsWith('sandbox_') ? SB_INFO_MODAL_URL : INFO_MODAL_URL;
   const [jsResponse, setJsResponse] = useState<string>("");
   let webview:any;
   const getJsRes = async () => {
@@ -109,7 +111,7 @@ export const ZageInfoModal = ({
       };
       req.open(
         "GET",
-        "https://qt88c29c0e.execute-api.us-west-1.amazonaws.com/live-test/v0-rn.js",
+        "https://api.zage.dev/v0/v0-rn.js",
         true
       ); //Change URL to Info Modal URL
       req.send(null);
@@ -139,7 +141,7 @@ export const ZageInfoModal = ({
         useWebKit={true}
         height={"100%"}
         width={"100%"}
-        source={{ uri: INFO_MODAL_URL }}
+        source={{ uri: ZageInfoModalURL }}
         javaScriptEnabled={true}
         injectedJavaScript={jsResponse}
         style={{
@@ -154,7 +156,7 @@ export const ZageInfoModal = ({
           setShowModal(false);
         }}
         onNavigationStateChange={(_) => {
-          if (_.url !== INFO_MODAL_URL && Platform.OS === "ios") {
+          if (_.url !== ZageInfoModalURL && Platform.OS === "ios") {
             webview.stopLoading();
             Linking.openURL(_.url)
               .then(() => null)
