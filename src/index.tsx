@@ -57,7 +57,7 @@ export const Zage = ({
   };
 
   useEffect(() => {
-    if (jsResponse === '' && paymentToken && paymentToken.startsWith('py_')) {
+    if (jsResponse === '' && paymentToken) {
       getJsRes(paymentToken);
     }
   }, [paymentToken, jsResponse]);
