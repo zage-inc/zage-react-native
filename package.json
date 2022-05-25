@@ -1,6 +1,6 @@
 {
   "name": "@zage/zage-react-native",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Zage React-Native SDK",
   "main": "./dist/index.js",
   "keywords": [
