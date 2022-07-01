@@ -140,7 +140,9 @@ export const ZageInfoModal = ({ publicKey, showModal, setShowModal }: ZageInfoMo
   const jsResponse =
     baseJs +
     `
-    openModal('${publicKey}')
+    if(!document.querySelector('#zg-iframe')){
+      openModal('${publicKey}')
+    }
     true
   `;
   let webview: any;
