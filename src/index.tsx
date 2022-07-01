@@ -52,7 +52,9 @@ export const Zage = ({
     baseJs +
     `
     const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width user-scalable=0'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);
-    openPayment('${paymentToken}', '${publicKey}')
+    if(!document.querySelector('#zg-iframe')){
+      openPayment('${paymentToken}', '${publicKey}')
+    }
     true
   `;
 
@@ -86,10 +88,11 @@ export const Zage = ({
           const params = getParams(request.url);
           if (oAuth) return false;
           const cleanedUrl = request.url.toLowerCase();
-          const needsInAppBrowser = oAuthUrls
+          const isOAuthInstitution = oAuthUrls
             .map((url) => cleanedUrl.includes(url))
             .some((url) => url);
-          if (needsInAppBrowser || params?.['redirect_uri']) {
+          const needsInAppBrowser = isOAuthInstitution || params?.['redirect_uri'];
+          if (needsInAppBrowser) {
             InAppBrowser.close();
             setOAuth(true);
             InAppBrowser.open(request.url, {
@@ -106,15 +109,15 @@ export const Zage = ({
               enableDefaultShare: true,
               forceCloseOnRedirection: true,
             })
-              .then((_) => {
+              .then(() => {
                 setOAuth(false);
               })
-              .catch((_) => {
-                return;
+              .catch(() => {
+                setOAuth(false);
               });
             return false;
           }
-          return request.url.includes('zage') || request.url.includes('plaid');
+          return true;
         }}
         style={{ backgroundColor: 'transparent' }}
         onMessage={(event) => {
