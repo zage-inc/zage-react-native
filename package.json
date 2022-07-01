@@ -1,6 +1,6 @@
 {
   "name": "@zage/zage-react-native",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Zage React-Native SDK",
   "main": "./dist/index.js",
   "keywords": [
@@ -8,7 +8,7 @@
     "zage-react-native"
   ],
   "scripts": {
-    "lint": "eslint 'src/*.tsx' && npm run prettier",
+    "lint": "eslint --fix 'src/*.tsx' && npm run prettier",
     "build": "npm run lint && rm -rf *.tsbuildinfo && tsc",
     "prettier": "prettier './**/*.tsx' --write",
     "prepublishOnly": "npm run build"
@@ -16,6 +16,7 @@
   "author": "Zage",
   "license": "MIT",
   "dependencies": {
+    "react-native-inappbrowser-reborn": "^3.6.3",
     "react-native-webview": "^11.13.0"
   },
   "peerDependencies": {
