@@ -1,5 +1,5 @@
 import React from 'react';
-import { KeyboardAvoidingView, Linking, Modal, Platform } from 'react-native';
+import { Linking, Modal, Platform, SafeAreaView } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 const PROD_APP_URL = 'https://production.zage.dev/checkout';
@@ -48,21 +48,21 @@ export const Zage = ({
     return <></>;
   }
   return (
-    <KeyboardAvoidingView behavior={Platform.select({ ios: 'position', android: undefined })}>
-      <Modal
-        visible={showZage}
-        transparent={true}
-        animationType='none'
-        presentationStyle='overFullScreen'
-        style={{ backgroundColor: 'transparent' }}
-      >
+    <Modal
+      visible={showZage}
+      transparent={false}
+      animationType='none'
+      presentationStyle='overFullScreen'
+      style={{ backgroundColor: 'transparent' }}
+    >
+      <SafeAreaView style={{ flex: 0, backgroundColor: '#1F2937', opacity: 0.75 }} />
+      <SafeAreaView style={{ flex: 1 }}>
         <WebView
           source={{ uri: zageApp }}
           javaScriptEnabled={true}
           injectedJavaScript={jsResponse}
-          keyboardDisplayRequiresUserAction
           scrollEnabled={false}
-          style={{ backgroundColor: 'transparent' }}
+          style={{ backgroundColor: 'transparent', resizeMode: 'contain' }}
           onMessage={(event) => {
             const res = JSON.parse(event.nativeEvent.data);
             if (res.completed) {
@@ -73,8 +73,9 @@ export const Zage = ({
             setShowZage(false);
           }}
         />
-      </Modal>
-    </KeyboardAvoidingView>
+      </SafeAreaView>
+      <SafeAreaView style={{ flex: 0, backgroundColor: '#1F2937', opacity: 0.75 }} />
+    </Modal>
   );
 };
 
