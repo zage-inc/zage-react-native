@@ -50,7 +50,7 @@ export const Zage = ({
   return (
     <Modal
       visible={showZage}
-      transparent={false}
+      transparent={true}
       animationType='none'
       presentationStyle='overFullScreen'
       style={{ backgroundColor: 'transparent' }}
